@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Communauté</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #1e1e2f, #13131f);
+      color: white;
+    }
+
+        /* En-tête */
+        .header {
+          position: sticky;
+          top: 0;
+          background-color: rgba(0, 123, 255, 0.9); /* Couleur bleue transparente */
+          color: white;
+          padding: 15px 20px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          z-index: 1000;
+          box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+    
+        .header img {
+          height: 50px;
+          width: 50px;
+          border-radius: 50%;
+          margin-right: 15px;
+        }
+    
+        .user-info {
+          display: flex;
+          align-items: center;
+        }
+    
+        .header button {
+          background-color: white;
+          color: #007BFF;
+          border: none;
+          padding: 10px 15px;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+    
+        .header button:hover {
+          background-color: #0056b3;
+          color: white;
+        }
+
+    .container {
+      width: 90%;
+      max-width: 800px;
+      margin: auto;
+      padding-top: 20px;
+    }
+
+    .section {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
+    }
+
+    .post-img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #007BFF;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .bottom-nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      color: black;
+      padding: 20px;
+      border-radius: 10px;
+      z-index: 1000;
+    }
+
+    .popup-content {
+      text-align: center;
+    }
+
+    .reaction {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 5px;
+    }
+
+    .reaction button {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .reaction button:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+    <div class="header">
+      <div class="user-info">
+        <img src="./profil.jpg" alt="Photo de l'utilisateur">
+        <strong>Bienvenue, Grarou Israël</strong>
+      </div>
+      <button onclick="location.href='logout.html'">Déconnexion</button>
+    </div>
+
+    <div class="section">
+      <h2>Publications</h2>
+      <button onclick="location.href='poste.html'">Voir plus</button>
+    </div>
+    
+    <div class="section">
+      <h2>Événements</h2>
+      <button onclick="ouvrirPopupEvenement()">Ajouter un événement</button>
+      <div id="evenement-liste"></div>
+    </div>
+
+    <div class="section">
+      <h2>Suivre l'Actualité</h2>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <a href="chat.html">💬</a>     
+    <a href="musique.html">🎵</a>
+    <a href="index.html">🏠</a>
+    <a href="videos.html">📺</a>
+    <a href="communauté.html">CMNTE</a>
+  </div>
+
+  <div id="popupEvenement" class="popup">
+    <div class="popup-content">
+      <h3>Ajouter un événement</h3>
+      <input type="text" id="titre-evenement" placeholder="Titre de l'événement">
+      <input type="date" id="date-evenement">
+      <textarea id="desc-evenement" placeholder="Description"></textarea>
+      <button onclick="ajouterEvenement()">Ajouter</button>
+      <button onclick="fermerPopupEvenement()">Annuler</button>
+    </div>
+  </div>
+
+  <div id="popupPost" class="popup">
+    <div class="popup-content">
+      <h3>Créer un post</h3>
+      <textarea id="contenu-post" placeholder="Exprimez-vous..."></textarea>
+      <input type="file" id="image-post" accept="image/*">
+      <button onclick="ajouterPost()">Publier</button>
+      <button onclick="fermerPopupPost()">Annuler</button>
+    </div>
+  </div>
+
+  <script>
+    function ouvrirPopupEvenement() {
+      document.getElementById("popupEvenement").style.display = "block";
+    }
+
+    function fermerPopupEvenement() {
+      document.getElementById("popupEvenement").style.display = "none";
+    }
+
+    function ajouterEvenement() {
+      let titre = document.getElementById("titre-evenement").value;
+      let date = document.getElementById("date-evenement").value;
+      let description = document.getElementById("desc-evenement").value;
+
+      if (titre && date) {
+        let evenementListe = document.getElementById("evenement-liste");
+        let evenement = document.createElement("div");
+        evenement.classList.add("section");
+        evenement.innerHTML = `<strong>${titre}</strong> - ${date}<p>${description}</p>`;
+        evenementListe.appendChild(evenement);
+        fermerPopupEvenement();
+      } else {
+        alert("Veuillez remplir tous les champs.");
+      }
+    }
+
+    function ouvrirPopupPost() {
+      document.getElementById("popupPost").style.display = "block";
+    }
+
+    function fermerPopupPost() {
+      document.getElementById("popupPost").style.display = "none";
+    }
+
+    function ajouterPost() {
+      let contenu = document.getElementById("contenu-post").value;
+      let imageInput = document.getElementById("image-post");
+
+      if (contenu || imageInput.files.length > 0) {
+        let postListe = document.getElementById("post-liste");
+        let post = document.createElement("div");
+        post.classList.add("section");
+
+        let postContent = `<p>${contenu}</p>`;
+
+        if (imageInput.files.length > 0) {
+          let file = imageInput.files[0];
+          let reader = new FileReader();
+
+          reader.onload = function(e) {
+            let img = document.createElement("img");
+            img.src = e.target.result;
+            img.classList.add("post-img");
+            post.innerHTML = postContent;
+            post.appendChild(img);
+            postListe.appendChild(post);
+          };
+
+          reader.readAsDataURL(file);
+        } else {
+          post.innerHTML = postContent;
+          postListe.appendChild(post);
+        }
+
+        fermerPopupPost();
+      } else {
+        alert("Le post ne peut pas être vide.");
+      }
+    }
+  </script>
+
+</body>
+<footer> Restez informé de toutes les actualités internes et externes</footer>
+</html>

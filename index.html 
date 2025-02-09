@@ -1,71 +1,221 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IDA- informatique developpeur d'application</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page d'Accueil</title>
+  <style>
+    /* Style général */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(45deg, #6b8cff, #f7f7f7);
+      color: #333;
+    }
+
+    /* En-tête */
+    .header {
+      position: sticky;
+      top: 0;
+      background-color: rgba(0, 123, 255, 0.9); /* Couleur bleue transparente */
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .header img {
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+      margin-right: 15px;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+    }
+
+    .header button {
+      background-color: white;
+      color: #007BFF;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .header button:hover {
+      background-color: #0056b3;
+      color: white;
+    }
+
+    /* Style des sections */
+    .section {
+      padding: 30px;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 900px;
+      background-color: rgba(255, 255, 255, 0.8); /* Fond semi-transparent */
+      border-radius: 10px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .section h2 {
+      color: #007BFF;
+      margin-bottom: 15px;
+    }
+
+    .section button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .section button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Vidéos */
+    .video-container {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 10px;
+    }
+
+    .video-container video {
+      min-width: 300px;
+      height: 180px;
+      border-radius: 10px;
+    }
+
+    /* Musique */
+    .music-item {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .music-item audio {
+      width: 100%;
+    }
+    /* Barre de navigation en bas */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #007BFF;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .bottom-nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- En-tête -->
-    <header>
-        <div class="logo">IDA</div>
-        <nav>
-            <ul>
-                <li><a href="#">Accueil</a></li>
-                <li><a href="#">Publications</a></li>
-                <li><a href="#">Vidéos</a></li>
-            </ul>
-            <ul>
-                <li><a href="#">Cours</a></li>
-                <li><a href="#">Tutoriels</a></li>
-                <li><a href="#">Logiciels</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+  <!-- En-tête -->
+  <div class="header">
+    <div class="user-info">
+      <img src="./profil.jpg" alt="Photo de l'utilisateur">
+      <strong>Bienvenue, Grarou Israël</strong>
+    </div>
+    <button onclick="location.href='login.html'">connexion</button>
+  </div>
+</div>
+<div class="bottom-nav">
+  <a href="chat.html">💬</a>     
+  <a href="musique.html">🎵</a>
+  <a href="index.html">🏠</a>
+  <a href="videos.html">📺</a>
+  <a href="communauté.html">cmt</a>
+</div>
 
-    <!-- Section principale -->
-    <section class="fade-in">
-    <h2>Bienvenue sur mon site</h2>
-    <p>Découvrez du contenu interactif avec des animations dynamiques.</p>
-</section>
-    <section class="hero">
-        <h1>Bienvenue sur IDA Hub</h1>
-        <p>Découvrez les dernières publications, tutoriels et ressources pour le développement informatique.</p>
-        <a href="#" class="btn">Explorer</a>
-        <a href="https://www.facebook.com/profile.php?id=61572616138699" class="btn">notre page facebook</a>
-    </section>
-    <section class="fade-in">
-    <h2>Cours et Tutoriels</h2>
-    <p>Retrouvez nos meilleures ressources pour apprendre.</p>
-</section>
+  <!-- Section 1 : Divertissements -->
+  <div class="section" id="divertissements">
+    <h2>Divertissements</h2>
+    <p>Découvrez nos jeux, quiz et blagues amusantes !</p>
+    <button onclick="location.href='divertissements.html'">Voir plus</button>
+  </div>
 
-    <!-- Aperçu des sections principales -->
-    <section class="fade-in">
-        <div class="box">
-            <h2>📢 Dernières Publications</h2>
-            <p>Intégration des publications Facebook ici.</p>
-        </div>
-        <div class="box">
-            <h2>🎥 Vidéos Tutoriels</h2>
-            <p>Regardez les derniers tutoriels.</p>
-        </div>
-        <div class="box">
-            <h2>📚 Cours et Tutoriels</h2>
-            <p>Apprenez avec nos guides détaillés.</p>
-        </div>
-        <div class="box">
-            <h2>💻 Logiciels Recommandés</h2>
-            <p>Téléchargez des outils utiles.</p>
-        </div>
-    </section>
+  <!-- Section 2 : FILMS ET SERIES -->
+  <div class="section" id="videos">
+    <h2>FILMS ET SERIES</h2>
+    <div class="video-container">
+      <video controls>
+        <source src="video1.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas les vidéos.
+      </video>
 
-    <!-- Pied de page -->
-    <footer>
-        <p>&copy; 2025 IDA Hub | Tous droits réservés</p>        
-    </footer>
-<script src="script.js"></script>
+      <video controls>
+        <source src="video2.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas les vidéos.
+      </video>
+
+      <video controls>
+        <source src="video3.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas les vidéos.
+      </video>
+    </div>
+    <button onclick="location.href='videos.html'">Voir plus</button>
+  </div>
+
+  <!-- Section 3 : Téléchargement de musique -->
+  <div class="section" id="musique">
+    <h2>Téléchargement de Musique</h2>
+    <div class="music-item">
+      <h3>Titre Chanson 1</h3>
+      <audio controls>
+        <source src="musique1.mp3" type="audio/mpeg">
+        Votre navigateur ne supporte pas l'élément audio.
+      </audio>
+      <button onclick="location.href='telecharger/musique1.mp3'">Télécharger</button>
+    </div>
+
+    <div class="music-item">
+      <h3>Titre Chanson 2</h3>
+      <audio controls>
+        <source src="musique2.mp3" type="audio/mpeg">
+        Votre navigateur ne supporte pas l'élément audio.
+      </audio>
+      <button onclick="location.href='telecharger/musique2.mp3'">Télécharger</button>
+    </div>
+
+    <button onclick="location.href='musique.html'">Voir plus</button>
+  </div>
+
+  <!-- Section 4 : Forum -->
+  <div class="section" id="forum">
+    <h2>Forum Communauté</h2>
+    <p>Participez à nos discussions et partagez vos idées.</p>
+    <button onclick="location.href='communauté.html'">Voir plus</button>
+  </div>
+
+  <!-- Section 5 : Actualités -->
+  <div class="section" id="actualites">
+    <h2>Actualités</h2>
+    <p>Restez informé avec les dernières nouvelles.</p>
+    <button onclick="location.href='communauté.html'">Voir plus</button>
+  </div>
+
 </body>
 </html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat en Temps Réel</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Style global */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(45deg, #6b8cff, #f7f7f7);
+      color: #333;
+    }
+
+    /* Conteneur principal du chat */
+    .chat-container {
+      max-width: 400px;
+      margin: 20px auto;
+      padding: 10px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
+      max-height: 500px;
+    }
+
+    /* Style des bulles de message */
+    .message {
+      display: flex;
+      align-items: center;
+      background: #e1efff;
+      padding: 10px;
+      border-radius: 10px;
+      margin: 5px 0;
+      max-width: 80%;
+    }
+
+    .message img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+ /* Barre de navigation en bas */
+   .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #007BFF;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .bottom-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+    .message-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .message-content .username {
+      font-weight: bold;
+      font-size: 14px;
+      color: #007BFF;
+    }
+
+    /* Champ d'entrée du message */
+    .chat-input {
+      display: flex;
+      margin-top: 10px;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .chat-input button {
+      background: #007BFF;
+      color: white;
+      border: none;
+      padding: 10px;
+      margin-left: 5px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .chat-input button:hover {
+      background: #0056b3;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Conteneur du chat -->
+  <div class="chat-container" id="chatContainer">
+    <div class="message">
+      <img src="profil.jpg" alt="Profil">
+      <div class="message-content">
+        <span class="username">Alice</span>
+        <p>Salut tout le monde !</p>
+      </div>
+    </div>
+
+    <div class="message">
+      <img src="profil.jpg" alt="Profil">
+      <div class="message-content">
+        <span class="username">Bob</span>
+        <p>Comment ça va ?</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Champ pour écrire un message -->
+  <div class="chat-input">
+    <input type="text" id="messageInput" placeholder="Tapez un message...">
+    <button onclick="envoyerMessage()">Envoyer</button>
+  </div>
+  <script>
+    function envoyerMessage() {
+      let messageInput = document.getElementById("messageInput");
+      let messageTexte = messageInput.value.trim();
+
+      if (messageTexte === "") return;
+
+      let chatContainer = document.getElementById("chatContainer");
+
+      let newMessage = document.createElement("div");
+      newMessage.classList.add("message");
+
+      newMessage.innerHTML = `
+        <img src="profil.jpg" alt="Profil">
+        <div class="message-content">
+          <span class="username">Moi</span>
+          <p>${messageTexte}</p>
+          <button onclick="aimerMessage(this)">❤️J'aime</button>
+        </div>
+      `;
+
+      chatContainer.appendChild(newMessage);
+      messageInput.value = ""; // Vider le champ après envoi
+      chatContainer.scrollTop = chatContainer.scrollHeight; // Faire défiler vers le bas
+    }
+       function aimerMessage(btn) {
+      btn.innerText = "❤️ Aimé";
+    }
+  </script>
+
+</body>
+<footer>
+</footer>
+</html>

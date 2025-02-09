@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page de Musique</title>
+  <style>
+    /* Style général */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(45deg, #6b8cff, #f7f7f7);
+      color: #333;
+      text-align: center;
+    }
+
+    /* Style de l'en-tête */
+    .header {
+      position: sticky;
+      top: 0;
+      background-color: rgba(0, 123, 255, 0.9);
+      color: white;
+      padding: 15px;
+      text-align: center;
+      z-index: 1000;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Sections */
+    .section {
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 900px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .section h2 {
+      text-align: center;
+      color: #007BFF;
+    }
+
+    /* Champ de recherche */
+    input {
+      width: 80%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin: 10px auto;
+      display: block;
+    }
+
+    /* Boutons */
+    button {
+      padding: 10px 15px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Conteneur des vidéos */
+    .video-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px;
+    }
+
+    /* Cartes des vidéos */
+    .video-card {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 250px;
+    }
+
+    .video-card iframe {
+      width: 100%;
+      height: 150px;
+      border-radius: 10px;
+    }
+
+    /* Bouton de téléchargement */
+    .download {
+      background-color: #28a745;
+    }
+
+    .download:hover {
+      background-color: #218838;
+    }
+
+    /* Barre de navigation en bas */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #007BFF;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .bottom-nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- En-tête -->
+  <div class="header">
+    <h1>🎵 Recherche et Lecture de Musique 🎵</h1>
+  </div>
+
+  <!-- Section Recherche -->
+  <div class="section" id="search-section">
+    <h2>🔍 Rechercher une Musique</h2>
+    <input type="text" id="search-input" placeholder="Entrez le nom de la chanson">
+    <button id="search-button">Rechercher</button>
+  </div>
+
+  <!-- Section Résultats -->
+  <div class="section" id="results-section">
+    <h2>🎶 Résultats</h2>
+    <div class="video-container" id="video-container"></div>
+  </div>
+</div>
+<div class="bottom-nav">
+  <a href="chat.html">💬</a>     
+  <a href="musique.html">🎵</a>
+  <a href="index.html">🏠</a>
+  <a href="videos.html">📺</a>
+  <a href="communauté.html">CMNT</a>
+</div>
+<div>
+  <BUtton id="https:\\www.tubidy.com">rechercher vous autre chose?</BUtton>
+</div>
+<div>
+ <h4> clique ici pour utiliser d'autres moyens de téléchargement si nécessaire </h4>
+</div>
+  <script>
+    const apiKey = "AIzaSyCJXMGTdtMqNfl-3wm7newr77qySeAuQ6M";
+    const searchButton = document.getElementById("search-button");
+    const searchInput = document.getElementById("search-input");
+    const videoContainer = document.getElementById("video-container");
+
+    // Fonction pour rechercher des vidéos sur YouTube
+    searchButton.addEventListener("click", () => {
+      const query = searchInput.value;
+      if (!query) {
+        alert("Veuillez entrer un mot-clé pour rechercher.");
+        return;
+      }
+
+      const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${encodeURIComponent(query)}&maxResults=6&key=${apiKey}`;
+
+      fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+          videoContainer.innerHTML = ""; // Réinitialiser les vidéos
+          data.items.forEach(item => {
+            const videoId = item.id.videoId;
+            const videoTitle = item.snippet.title;
+
+            // Création d'une carte pour chaque vidéo
+            const videoCard = document.createElement("div");
+            videoCard.classList.add("video-card");
+            videoCard.innerHTML = `
+              <iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>
+              <h4>${videoTitle}</h4>
+              <button class="download" onclick="downloadMusic('${videoId}')">⬇️ Télécharger</button>
+            `;
+
+            videoContainer.appendChild(videoCard);
+          });
+        })
+        .catch(error => {
+          console.error("Erreur lors de la recherche :", error);
+          alert("Une erreur s'est produite lors de la recherche.");
+        });
+    });
+
+    // Fonction pour télécharger la musique via un convertisseur
+    function downloadMusic(videoId) {
+      window.open(`https://www.y2mate.com/youtube/${videoId}`, "_blank");
+    }
+  </script>
+
+</body>
+<footer>
+  merci d'avoire utiliser life companion pour vos téléchargement
+</footer>
+</html>

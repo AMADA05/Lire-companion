@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Communauté</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #1e1e2f, #13131f);
+      color: white;
+    }
+    .container {
+      width: 90%;
+      max-width: 800px;
+      margin: auto;
+      padding-top: 20px;
+    }
+    .header img {
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+      margin-right: 15px;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+    }
+    .section {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
+    }
+
+    .post {
+      padding: 10px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.15);
+      margin-top: 15px;
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .profile-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .post-img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .post-info {
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+     /* Barre de navigation en bas */
+   .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #007BFF;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .bottom-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+  }
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      color: black;
+      padding: 20px;
+      border-radius: 10px;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="user-info">
+      <img src="./profil.jpg" alt="Photo de l'utilisateur">
+      <strong>Bienvenue, Grarou Israël</strong>
+    </div>
+
+  <div class="container">
+    <div class="section">
+      <h2>Publications</h2>
+      <button onclick="ouvrirPopupPost()">Ajouter un post</button>
+      <div id="post-liste"></div>
+    </div>
+  </div>
+
+  <div id="popupPost" class="popup">
+    <div class="popup-content">
+      <h3>Créer un post</h3>
+      <input type="text" id="nom-utilisateur" placeholder="Votre nom">
+      <input type="file" id="photo-profil" accept="image/*">
+      <textarea id="contenu-post" placeholder="Exprimez-vous..."></textarea>
+      <input type="file" id="image-post" accept="image/*">
+      <button onclick="ajouterPost()">Publier</button>
+      <button onclick="fermerPopupPost()">Annuler</button>
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <a href="chat.html">💬</a>     
+    <a href="musique.html">🎵</a>
+    <a href="index.html">🏠</a>
+    <a href="videos.html">📺</a>
+    <a href="communauté.html">cmt</a>
+  </div>
+
+  <script>
+    function ouvrirPopupPost() {
+      document.getElementById("popupPost").style.display = "block";
+    }
+
+    function fermerPopupPost() {
+      document.getElementById("popupPost").style.display = "none";
+    }
+
+    function ajouterPost() {
+      let nomUtilisateur = document.getElementById("nom-utilisateur").value || "Anonyme";
+      let contenu = document.getElementById("contenu-post").value;
+      let imageInput = document.getElementById("image-post");
+      let photoProfilInput = document.getElementById("photo-profil");
+
+      if (!contenu && imageInput.files.length === 0) {
+        alert("Le post ne peut pas être vide.");
+        return;
+      }
+
+      let postListe = document.getElementById("post-liste");
+      let post = document.createElement("div");
+      post.classList.add("post");
+
+      let date = new Date().toLocaleDateString();
+
+      let photoProfil = "";
+      if (photoProfilInput.files.length > 0) {
+        let reader = new FileReader();
+        reader.onload = function(e) {
+          photoProfil = `<img src="${e.target.result}" class="profile-img">`;
+          afficherPost(post, photoProfil, nomUtilisateur, date, contenu, imageInput);
+        };
+        reader.readAsDataURL(photoProfilInput.files[0]);
+      } else {
+        afficherPost(post, photoProfil, nomUtilisateur, date, contenu, imageInput);
+      }
+
+      fermerPopupPost();
+    }
+
+    function afficherPost(post, photoProfil, nomUtilisateur, date, contenu, imageInput) {
+      let postListe = document.getElementById("post-liste");
+
+      let postContent = `
+        <div class="post-header">
+          ${photoProfil || '<img src="default-avatar.png" class="profile-img">'}
+          <div>
+            <strong>${nomUtilisateur}</strong><br>
+            <span class="post-info">${date}</span>
+          </div>
+        </div>
+        <p>${contenu}</p>
+      `;
+
+      post.innerHTML = postContent;
+
+      if (imageInput.files.length > 0) {
+        let reader = new FileReader();
+        reader.onload = function(e) {
+          let img = document.createElement("img");
+          img.src = e.target.result;
+          img.classList.add("post-img");
+          post.appendChild(img);
+          postListe.appendChild(post);
+        };
+        reader.readAsDataURL(imageInput.files[0]);
+      } else {
+        postListe.appendChild(post);
+      }
+    }
+  </script>
+
+</body>
+</html>
